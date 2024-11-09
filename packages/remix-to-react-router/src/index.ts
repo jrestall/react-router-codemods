@@ -2,7 +2,10 @@ import { API, FileInfo, ImportDeclaration, JSCodeshift } from 'jscodeshift';
 
 type PackageChange = {
   source: string;
-  imports?: Record<string, { name?: string; source?: string }>;
+  imports?: Record<
+    string,
+    { name?: string; source?: string; removeAlias?: true }
+  >;
   packageSource?: string;
   packageRemoved?: boolean;
 };
@@ -33,7 +36,11 @@ const PACKAGE_CHANGES: Record<string, PackageChange> = {
   '^@remix-run/dev$': {
     source: '@react-router/dev',
     imports: {
-      vitePlugin: { name: 'reactRouter', source: '@react-router/dev/vite' },
+      vitePlugin: {
+        name: 'reactRouter',
+        source: '@react-router/dev/vite',
+        removeAlias: true,
+      },
     },
   },
   '^@remix-run/cloudflare$': {
@@ -164,8 +171,9 @@ export default function transformer(file: FileInfo, api: API) {
               imports[specifier.imported.name]
             ) {
               const oldName = specifier.imported.name;
-              const newName = imports[oldName]?.name || oldName;
-              const newSource = imports[oldName]?.source || newpackage;
+              const newImport = imports[oldName];
+              const newName = newImport?.name || oldName;
+              const newSource = newImport?.source || newpackage;
 
               // Create a new import declaration if it doesn't exist
               if (!newImports[newSource]) {
@@ -176,14 +184,26 @@ export default function transformer(file: FileInfo, api: API) {
               }
 
               // Add the specifier to the new import declaration
-              newImports[newSource].specifiers?.push(
-                j.importSpecifier(j.identifier(newName))
+              const newSpecifier = j.importSpecifier(
+                j.identifier(newName),
+                !newImport?.removeAlias &&
+                specifier.local &&
+                  specifier.local.name &&
+                  specifier.local?.name !== specifier.imported.name
+                  ? j.identifier(specifier.local.name)
+                  : null
               );
 
+              newImports[newSource].specifiers?.push(newSpecifier);
+
               // Update all occurrences of the old specifier in the code
-              if (oldName !== newName) {
-                root.find(j.Identifier, { name: oldName }).forEach((idPath) => {
-                  idPath.node.name = newName;
+              // keeping any existing aliases unless explicitly removed
+              if (newName && oldName !== newName) {
+                const hasAlias = specifier.local?.name && specifier.local?.name !== specifier.imported.name;
+                const aliasedOldName = hasAlias ? specifier.local?.name : oldName;
+                const updatedName = (hasAlias && !newImport?.removeAlias && specifier.local?.name) || newName;
+                root.find(j.Identifier, { name: aliasedOldName }).forEach((idPath) => {
+                  idPath.node.name = updatedName;
                 });
               }
 
@@ -213,10 +233,9 @@ export default function transformer(file: FileInfo, api: API) {
         const newImportDeclarations = Object.values(newImports);
         if (
           comments &&
-          newImportDeclarations &&
-          newImportDeclarations.length > 0
+          newImportDeclarations.length > 0 &&
+          newImportDeclarations[0]
         ) {
-          // @ts-ignore
           newImportDeclarations[0].comments = comments;
         }
 
@@ -227,7 +246,7 @@ export default function transformer(file: FileInfo, api: API) {
     }
   });
 
-  // Step 8 - Rename instances of remix to reactRouter in entry files
+  // Step 8 - Rename instances of remix to reactRouter in server entry files
   if (file.path.endsWith('entry.server.tsx')) {
     root.find(j.Identifier, { name: 'remixContext' }).forEach((path) => {
       path.node.name = 'reactRouterContext';
