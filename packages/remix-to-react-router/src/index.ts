@@ -189,6 +189,18 @@ export default function transformer(file: FileInfo, api: API) {
               }
 
               dirtyFlag = true;
+            } else {
+              // Create a new import declaration if it doesn't exist
+              if (!newImports[newpackage]) {
+                newImports[newpackage] = j.importDeclaration(
+                  [],
+                  j.stringLiteral(newpackage)
+                );
+              }
+
+              // Add the specifier to the new import declaration
+              newImports[newpackage].specifiers?.push(specifier);
+              newImports[newpackage].importKind = importDeclaration.importKind;
             }
           });
         }
