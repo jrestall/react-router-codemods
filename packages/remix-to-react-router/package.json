@@ -1,0 +1,22 @@
+{
+  "name": "remix-imports-to-react-router",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "22.9.0",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.4",
+    "@codemod.com/codemod-utils": "1.0.0",
+    "jscodeshift": "catalog:",
+    "@types/jscodeshift": "catalog:"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest watch"
+  },
+  "files": [
+    "README.md",
+    ".codemodrc.json",
+    "/dist/index.cjs"
+  ],
+  "type": "module"
+}

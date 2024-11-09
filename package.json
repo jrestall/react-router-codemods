@@ -1,0 +1,26 @@
+{
+  "name": "react-router-codemods",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Codemods for migrating from Remix to React Router v7",
+  "scripts": {
+    "test": "vitest"
+  },
+  "keywords": [
+    "codemod",
+    "remix",
+    "react-router",
+    "migration"
+  ],
+  "author": "James Restall",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jscodeshift": "^0.11.10",
+    "@vitest/coverage-v8": "^2.1.4",
+    "codemod": "^0.14.1",
+    "jscodeshift": "^0.15.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.4"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://codemod-utils.s3.us-west-1.amazonaws.com/configuration_schema.json",
+  "name": "remix-to-react-router",
+  "version": "1.0.0",
+  "engine": "jscodeshift",
+  "private": false,
+  "arguments": [],
+  "meta": {
+    "tags": ["migration", "react-router", "remix", "v7"],
+    "git": "https://github.com/jrestall/react-router-codemods/packages/remix-to-react-router"
+  },
+  "include": ["**/*.js", "**/*.ts", "**/*.jsx", "**/*.tsx", "**/package.json", "**/vite.config.ts"]
+}
