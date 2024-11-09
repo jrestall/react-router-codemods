@@ -72,4 +72,12 @@ describe('remix-to-react-router', () => {
       'entry.server.tsx'
     );
   });
+
+  it('migrates @remix-run/testing', async () => {
+    await testTransformation(
+      'testing.remix.tsx',
+      'testing.rr7.tsx',
+      '$username.test.tsx'
+    );
+  });
 });
