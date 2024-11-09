@@ -80,4 +80,12 @@ describe('remix-to-react-router', () => {
       '$username.test.tsx'
     );
   });
+
+  it('migrates vite.config.ts', async () => {
+    await testTransformation(
+      'vite.config.remix.ts',
+      'vite.config.rr7.ts',
+      'vite.config.ts'
+    );
+  });
 });

@@ -99,7 +99,6 @@ export default function transformer(file: FileInfo, api: API) {
     const packageJson = JSON.parse(file.source);
 
     // Step 2 - Update dependencies in package.json
-    // Update dependencies in package.json
     for (const [pattern, change] of Object.entries(PACKAGE_CHANGES)) {
       const regex = new RegExp(pattern);
       const dependencies = packageJson.dependencies || {};
