@@ -88,4 +88,12 @@ describe('remix-to-react-router', () => {
       'vite.config.ts'
     );
   });
+
+  it('migrates changed imports', async () => {
+    await testTransformation(
+      'imports.remix.tsx',
+      'imports.rr7.tsx',
+      'test.tsx'
+    );
+  });
 });

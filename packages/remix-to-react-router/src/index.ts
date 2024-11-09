@@ -200,6 +200,8 @@ export default function transformer(file: FileInfo, api: API) {
               // Add the specifier to the new import declaration
               newImports[newpackage].specifiers?.push(specifier);
               newImports[newpackage].importKind = importDeclaration.importKind;
+
+              dirtyFlag = true;
             }
           });
         }
