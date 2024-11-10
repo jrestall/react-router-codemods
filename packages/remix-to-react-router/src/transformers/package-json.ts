@@ -27,11 +27,9 @@ export function transformPackageJson(file: FileInfo): string | undefined {
 
     const dependencies = packageJson.dependencies;
     dirtyFlag = updateDependencies(dependencies, regex, change) || dirtyFlag;
-    packageJson.dependencies = dependencies;
 
     const devDependencies = packageJson.devDependencies;
     dirtyFlag = updateDependencies(devDependencies, regex, change) || dirtyFlag;
-    packageJson.devDependencies = devDependencies;
   }
 
   // Step 3 - Change scripts in package.json
