@@ -10,8 +10,9 @@
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
+    "@react-router/express": "^7.0.0",
     "@react-router/node": "*",
-    "@react-router/serve": "*",
+    "@react-router/serve": "workspace:*",
     "isbot": "^4.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

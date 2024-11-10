@@ -187,7 +187,7 @@ export default function transformer(file: FileInfo, api: API) {
               const newSpecifier = j.importSpecifier(
                 j.identifier(newName),
                 !newImport?.removeAlias &&
-                specifier.local &&
+                  specifier.local &&
                   specifier.local.name &&
                   specifier.local?.name !== specifier.imported.name
                   ? j.identifier(specifier.local.name)
@@ -199,12 +199,22 @@ export default function transformer(file: FileInfo, api: API) {
               // Update all occurrences of the old specifier in the code
               // keeping any existing aliases unless explicitly removed
               if (newName && oldName !== newName) {
-                const hasAlias = specifier.local?.name && specifier.local?.name !== specifier.imported.name;
-                const aliasedOldName = hasAlias ? specifier.local?.name : oldName;
-                const updatedName = (hasAlias && !newImport?.removeAlias && specifier.local?.name) || newName;
-                root.find(j.Identifier, { name: aliasedOldName }).forEach((idPath) => {
-                  idPath.node.name = updatedName;
-                });
+                const hasAlias =
+                  specifier.local?.name &&
+                  specifier.local?.name !== specifier.imported.name;
+                const aliasedOldName = hasAlias
+                  ? specifier.local?.name
+                  : oldName;
+                const updatedName =
+                  (hasAlias &&
+                    !newImport?.removeAlias &&
+                    specifier.local?.name) ||
+                  newName;
+                root
+                  .find(j.Identifier, { name: aliasedOldName })
+                  .forEach((idPath) => {
+                    idPath.node.name = updatedName;
+                  });
               }
 
               dirtyFlag = true;
@@ -276,7 +286,12 @@ function updateDependencies(
           regex,
           packageChange.packageSource || packageChange.source
         );
-        dependencies[newPackageName] = version;
+        // Set the version to ^7.0.0 if the current version is semver compatible
+        if (/^\^?\d+\.\d+\.\d+/.test(version)) {
+          dependencies[newPackageName] = '^7.0.0';
+        } else {
+          dependencies[newPackageName] = version;
+        }
       }
 
       delete dependencies[oldPackage];
