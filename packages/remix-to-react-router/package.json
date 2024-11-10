@@ -14,7 +14,8 @@
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest watch",
-    "build": "esbuild src/index.ts --outdir=dist --format=cjs --bundle --out-extension:.js=.cjs"
+    "build": "esbuild src/index.ts --outdir=dist --format=cjs --bundle --out-extension:.js=.cjs",
+    "publish": "codemod login && codemod publish"
   },
   "files": [
     "README.md",
