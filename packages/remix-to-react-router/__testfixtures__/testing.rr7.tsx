@@ -6,8 +6,8 @@
 /**
  * @vitest-environment jsdom
  */
-import { faker } from '@faker-js/faker';
-import { createRoutesStub } from "react-router";
+import { faker } from "@faker-js/faker";
+import { createRoutesStub } from 'react-router';
 import { render, screen } from '@testing-library/react';
 import setCookieParser from 'set-cookie-parser';
 import { test } from 'vitest';
