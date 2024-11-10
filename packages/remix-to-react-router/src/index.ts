@@ -1,4 +1,9 @@
-import { API, FileInfo, ImportDeclaration, JSCodeshift } from 'jscodeshift';
+import type {
+  API,
+  FileInfo,
+  ImportDeclaration,
+  JSCodeshift,
+} from 'jscodeshift';
 
 type PackageChange = {
   source: string;

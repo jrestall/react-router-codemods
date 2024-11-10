@@ -1,13 +1,35 @@
 {
   "$schema": "https://codemod-utils.s3.us-west-1.amazonaws.com/configuration_schema.json",
-  "name": "remix-to-react-router",
-  "version": "1.0.0",
+  "name": "remix/2/react-router/upgrade",
+  "description": "Migrates Remix to React Router v7",
+  "version": "1.0.1",
   "engine": "jscodeshift",
   "private": false,
+  "include": [
+    "**/*.js",
+    "**/*.ts",
+    "**/*.jsx",
+    "**/*.tsx",
+    "**/package.json",
+    "**/vite.config.ts"
+  ],
+  "applicability": {
+    "from": [
+      [
+        "@remix-run/react",
+        ">=",
+        "2.0.0"
+      ]
+    ]
+  },
   "arguments": [],
   "meta": {
-    "tags": ["migration", "react-router", "remix", "v7"],
-    "git": "https://github.com/jrestall/react-router-codemods/packages/remix-to-react-router"
-  },
-  "include": ["**/*.js", "**/*.ts", "**/*.jsx", "**/*.tsx", "**/package.json", "**/vite.config.ts"]
+    "tags": [
+      "migration",
+      "remix",
+      "react-router",
+      "v7"
+    ],
+    "git": "https://github.com/jrestall/react-router-codemods/tree/main/packages/remix-to-react-router"
+  }
 }

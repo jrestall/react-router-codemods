@@ -7,11 +7,14 @@
     "vitest": "^2.1.4",
     "@codemod.com/codemod-utils": "1.0.0",
     "jscodeshift": "catalog:",
-    "@types/jscodeshift": "catalog:"
+    "@types/jscodeshift": "catalog:",
+    "esbuild": "^0.24.0"
   },
+  "main": "./dist/index.cjs",
   "scripts": {
     "test": "vitest run",
-    "test:watch": "vitest watch"
+    "test:watch": "vitest watch",
+    "build": "esbuild src/index.ts --outdir=dist --format=cjs --bundle --out-extension:.js=.cjs"
   },
   "files": [
     "README.md",
