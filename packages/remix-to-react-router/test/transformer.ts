@@ -32,7 +32,7 @@ async function readTestFile(filePath: string): Promise<string> {
 async function testTransformation(
   inputFile: string,
   outputFile: string,
-  filePath: string
+  filePath: string = 'test.tsx'
 ) {
   const INPUT = await readTestFile(inputFile);
   const OUTPUT = await readTestFile(outputFile);
@@ -90,10 +90,20 @@ describe('remix-to-react-router', () => {
   });
 
   it('migrates changed imports', async () => {
-    await testTransformation(
-      'imports.remix.tsx',
-      'imports.rr7.tsx',
-      'test.tsx'
+    await testTransformation('imports.remix.tsx', 'imports.rr7.tsx');
+  });
+
+  it("doesn't modify files without remix", async () => {
+    const INPUT = await readTestFile('nochange.tsx');
+
+    const actualOutput = transform(
+      {
+        path: 'nochange.tsx',
+        source: INPUT,
+      },
+      buildApi('tsx')
     );
+
+    assert.equal(actualOutput, undefined);
   });
 });
