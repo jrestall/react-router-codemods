@@ -16,9 +16,7 @@ const OLD_SCRIPTS: Record<string, string> = {
   typecheck: 'tsc',
 };
 
-export function transformPackageJson(
-  file: FileInfo
-): string | undefined {
+export function transformPackageJson(file: FileInfo): string | undefined {
   let dirtyFlag = false;
 
   const packageJson = JSON.parse(file.source);
@@ -26,13 +24,13 @@ export function transformPackageJson(
   // Step 2 - Update dependencies in package.json
   for (const [pattern, change] of Object.entries(PACKAGE_CHANGES)) {
     const regex = new RegExp(pattern);
-    const dependencies = packageJson.dependencies || {};
-    const devDependencies = packageJson.devDependencies || {};
 
+    const dependencies = packageJson.dependencies;
     dirtyFlag = updateDependencies(dependencies, regex, change) || dirtyFlag;
-    dirtyFlag = updateDependencies(devDependencies, regex, change) || dirtyFlag;
-
     packageJson.dependencies = dependencies;
+
+    const devDependencies = packageJson.devDependencies;
+    dirtyFlag = updateDependencies(devDependencies, regex, change) || dirtyFlag;
     packageJson.devDependencies = devDependencies;
   }
 

@@ -3,6 +3,7 @@ import { PackageChange } from '../types.js';
 export function sortDependencies(
   dependencies: Record<string, string>
 ): Record<string, string> {
+  if (!dependencies) return dependencies;
   return Object.fromEntries(Object.entries(dependencies || {}).sort());
 }
 
@@ -12,6 +13,7 @@ export function updateDependencies(
   packageChange: PackageChange
 ): boolean {
   let dirtyFlag = false;
+  if (!dependencies) return dirtyFlag;
   for (const [oldPackage, version] of Object.entries(dependencies)) {
     if (regex.test(oldPackage)) {
       if (!packageChange.packageRemoved) {
