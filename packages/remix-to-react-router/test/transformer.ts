@@ -93,6 +93,10 @@ describe('remix-to-react-router', () => {
     await testTransformation('imports.remix.tsx', 'imports.rr7.tsx');
   });
 
+  it('migrates virtual:remix/server-build in server', async () => {
+    await testTransformation('server.remix.ts', 'server.rr7.ts');
+  });
+
   it("doesn't modify files without remix", async () => {
     const INPUT = await readTestFile('nochange.tsx');
 

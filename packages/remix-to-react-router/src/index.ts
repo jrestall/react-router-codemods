@@ -4,6 +4,7 @@ import detectQuoteStyle from './utils/quote-style.js';
 import { transformPackageJson } from './transformers/package-json.js';
 import { transformImports } from './transformers/imports.js';
 import { transformRemixNames } from './transformers/rename-remix.js';
+import { transformRenameServerBuild } from './transformers/rename-server-build.js';
 
 export default function transformer(file: FileInfo, api: API) {
   // Automates the manual steps from the Remix to React Router upgrade guide
@@ -31,6 +32,8 @@ export default function transformer(file: FileInfo, api: API) {
   if (file.path.endsWith('entry.server.tsx')) {
     dirtyFlag = transformRemixNames(j, root) || dirtyFlag;
   }
+
+  dirtyFlag = transformRenameServerBuild(j, root) || dirtyFlag;
 
   return dirtyFlag ? root.toSource({ quote, lineTerminator }) : undefined;
 }
