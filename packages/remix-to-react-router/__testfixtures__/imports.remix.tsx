@@ -33,6 +33,7 @@ import {
 import { createRequestHandler } from '@remix-run/express';
 import { createRemixStub } from '@remix-run/testing';
 import { createRemixStub as aliasedRenamedImport } from '@remix-run/testing';
+import { useLocation, useNavigate, Route, Switch } from 'react-router-dom';
 
 export function loader() {
   createRemixStub();

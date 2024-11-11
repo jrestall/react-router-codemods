@@ -39,6 +39,7 @@ import {
 import { createRequestHandler } from '@react-router/express';
 import { createRoutesStub } from 'react-router';
 import { createRoutesStub as aliasedRenamedImport } from 'react-router';
+import { useLocation, useNavigate, Route, Switch } from 'react-router';
 
 export function loader() {
   createRoutesStub();

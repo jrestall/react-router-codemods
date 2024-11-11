@@ -70,4 +70,8 @@ export const PACKAGE_CHANGES: Record<string, PackageChange> = {
   '^@remix-run/(?!eslint-config)(.*)$': {
     source: '@react-router/$1',
   },
+  '^react-router-dom$': {
+    source: 'react-router',
+    packageRemoved: true,
+  },
 };
