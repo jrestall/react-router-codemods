@@ -6,7 +6,7 @@ export function transformRenameServerBuild(
 ) {
   let dirtyFlag = false;
 
-  // Change the string "virtual:remix/server-build" to "virtual:remix/server-build"
+  // Change the string "virtual:remix/server-build" to "virtual:react-router/server-build"
   root
     .find(j.StringLiteral, { value: 'virtual:remix/server-build' })
     .forEach((path) => {
