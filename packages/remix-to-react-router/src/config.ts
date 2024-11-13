@@ -37,6 +37,13 @@ export const PACKAGE_CHANGES: Record<string, PackageChange> = {
       },
     },
   },
+  '^@remix-run/route-config$': {
+    source: '@react-router/dev/routes',
+    packageRemoved: true,
+  },
+  '^@remix-run/routes-option-adapter$': {
+    source: '@react-router/remix-routes-option-adapter',
+  },
   '^@remix-run/cloudflare$': {
     source: 'react-router',
     imports: {

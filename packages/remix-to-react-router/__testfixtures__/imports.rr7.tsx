@@ -40,6 +40,11 @@ import { createRequestHandler } from '@react-router/express';
 import { createRoutesStub } from 'react-router';
 import { createRoutesStub as aliasedRenamedImport } from 'react-router';
 import { useLocation, useNavigate, Route, Switch } from 'react-router';
+import { flatRoutes } from '@react-router/fs-routes';
+import type { RouteConfig } from '@react-router/dev/routes';
+import { remixRoutesOptionAdapter } from '@react-router/remix-routes-option-adapter';
+
+export const routes: RouteConfig = flatRoutes();
 
 export function loader() {
   createRoutesStub();

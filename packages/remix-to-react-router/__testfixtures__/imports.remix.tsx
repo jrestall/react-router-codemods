@@ -34,6 +34,11 @@ import { createRequestHandler } from '@remix-run/express';
 import { createRemixStub } from '@remix-run/testing';
 import { createRemixStub as aliasedRenamedImport } from '@remix-run/testing';
 import { useLocation, useNavigate, Route, Switch } from 'react-router-dom';
+import { flatRoutes } from "@remix-run/fs-routes";
+import type { RouteConfig } from "@remix-run/route-config";
+import { remixRoutesOptionAdapter } from '@remix-run/routes-option-adapter';
+
+export const routes: RouteConfig = flatRoutes();
 
 export function loader() {
   createRemixStub();
