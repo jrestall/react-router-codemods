@@ -40,6 +40,10 @@ importers:
         version: 2.1.4(@types/node@22.9.0)
 
   packages/remix-to-react-router:
+    dependencies:
+      json5:
+        specifier: ^2.2.3
+        version: 2.2.3
     devDependencies:
       '@codemod.com/codemod-utils':
         specifier: 1.0.0

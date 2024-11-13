@@ -32,8 +32,8 @@ export function transformPackageJson(file: FileInfo): string | undefined {
     dirtyFlag = updateDependencies(devDependencies, regex, change) || dirtyFlag;
   }
 
-  // Add "react-router" dependency if it doesn't exist
-  if (!packageJson.dependencies['react-router']) {
+  // Add "react-router" dependency if it doesn't exist and we've updated a remix dependency
+  if (dirtyFlag && !packageJson.dependencies['react-router']) {
     packageJson.dependencies['react-router'] = '^7.0.0';
     dirtyFlag = true;
   }

@@ -31,11 +31,11 @@ async function readTestFile(filePath: string): Promise<string> {
 
 async function testTransformation(
   inputFile: string,
-  outputFile: string,
+  outputFile: string | undefined,
   filePath: string = 'test.tsx'
 ) {
   const INPUT = await readTestFile(inputFile);
-  const OUTPUT = await readTestFile(outputFile);
+  const OUTPUT = outputFile ? await readTestFile(outputFile) : undefined;
 
   const actualOutput = transform(
     {
@@ -51,8 +51,8 @@ async function testTransformation(
 describe('remix-to-react-router', () => {
   it('migrates package.json dependencies and scripts', async () => {
     await testTransformation(
-      'package1.input.json',
-      'package1.output.json',
+      'package.remix.json',
+      'package.rr7.json',
       'package.json'
     );
   });
@@ -97,17 +97,23 @@ describe('remix-to-react-router', () => {
     await testTransformation('server.remix.ts', 'server.rr7.ts');
   });
 
-  it("doesn't modify files without remix", async () => {
-    const INPUT = await readTestFile('nochange.tsx');
-
-    const actualOutput = transform(
-      {
-        path: 'nochange.tsx',
-        source: INPUT,
-      },
-      buildApi('tsx')
+  it('only modifies package.json that had remix packages', async () => {
+    await testTransformation(
+      'package.nochange.json',
+      undefined,
+      'package.json'
     );
+  });
 
-    assert.equal(actualOutput, undefined);
+  it('updates package names in tsconfig types', async () => {
+    await testTransformation(
+      'tsconfig.remix.json',
+      'tsconfig.rr7.json',
+      'tsconfig.json'
+    );
+  });
+
+  it("doesn't modify files without remix", async () => {
+    await testTransformation('nochange.tsx', undefined);
   });
 });

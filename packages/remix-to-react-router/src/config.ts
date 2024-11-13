@@ -23,6 +23,10 @@ export const PACKAGE_CHANGES: Record<string, PackageChange> = {
     source: 'react-router',
     packageRemoved: true,
   },
+  '^@remix-run/router$': {
+    source: 'react-router',
+    packageRemoved: true,
+  },
   '^@remix-run/dev$': {
     source: '@react-router/dev',
     imports: {

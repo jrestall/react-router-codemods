@@ -5,6 +5,8 @@ import { transformPackageJson } from './transformers/package-json.js';
 import { transformImports } from './transformers/imports.js';
 import { transformRemixNames } from './transformers/rename-remix.js';
 import { transformRenameServerBuild } from './transformers/rename-server-build.js';
+import { transformTsconfig } from './transformers/tsconfig.js';
+import { transformFunctionParams } from './transformers/function-params.js';
 
 export default function transformer(file: FileInfo, api: API) {
   // Automates the manual steps from the Remix to React Router upgrade guide
@@ -14,6 +16,11 @@ export default function transformer(file: FileInfo, api: API) {
   // Step 3 - Change scripts in package.json
   if (file.path.endsWith('package.json')) {
     return transformPackageJson(file);
+  }
+
+  // Step X - Update compilerOptions.types in tsconfig.json
+  if (file.path.endsWith('tsconfig.json')) {
+    return transformTsconfig(file);
   }
 
   const j: JSCodeshift = api.jscodeshift;
@@ -28,12 +35,16 @@ export default function transformer(file: FileInfo, api: API) {
   // Step 6 - Rename components in entry files
   let dirtyFlag = transformImports(j, root);
 
-  // Step 8 - Rename instances of remix to reactRouter in server entry files
+  // Step X - Update vi.mock("@remix-run/react", () => ...) and import("@remix-run/react")
+  dirtyFlag = transformFunctionParams(j, root) || dirtyFlag;
+
+  // Step X - Rename virtual:remix/server-build in server files
+  dirtyFlag = transformRenameServerBuild(j, root) || dirtyFlag;
+
+  // Step X - Rename instances of remix to reactRouter in server entry files
   if (file.path.endsWith('entry.server.tsx')) {
     dirtyFlag = transformRemixNames(j, root) || dirtyFlag;
   }
-
-  dirtyFlag = transformRenameServerBuild(j, root) || dirtyFlag;
 
   return dirtyFlag ? root.toSource({ quote, lineTerminator }) : undefined;
 }

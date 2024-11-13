@@ -6,7 +6,7 @@
 /**
  * @vitest-environment jsdom
  */
-import { faker } from "@faker-js/faker";
+import { faker } from '@faker-js/faker';
 import { createRoutesStub } from 'react-router';
 import { render, screen } from '@testing-library/react';
 import setCookieParser from 'set-cookie-parser';
@@ -20,8 +20,18 @@ import { prisma } from '#app/utils/db.server.ts';
 import { authSessionStorage } from '#app/utils/session.server.ts';
 import { createUser, getUserImages } from '#tests/db-utils.ts';
 import { default as UsernameRoute, loader } from './$username.tsx';
+import { vi } from 'vitest';
+import type * as remix from 'react-router';
 
 test('The user profile when not logged in as self', async () => {
+  vi.mock('react-router', async () => {
+    const remixActual = await import('react-router');
+    return remixActual;
+  });
+  vi.mock('@react-router/node', async () => {
+    const remixActual = await import('@react-router/node');
+    return remixActual;
+  });
   const userImages = await getUserImages();
   const userImage =
     userImages[faker.number.int({ min: 0, max: userImages.length - 1 })];
