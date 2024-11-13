@@ -26,3 +26,26 @@ export default defineConfig({
     tsconfigPaths(),
   ],
 });
+
+export default defineConfig({
+  plugins: [
+    reactRouter({
+      future: {
+        unstable_optimizeDeps: true
+      },
+      basename: '/test'
+    }),
+    tsconfigPaths(),
+  ],
+});
+
+export default defineConfig({
+  plugins: [
+    reactRouter({
+      future: {
+        unstable_optimizeDeps: true
+      },
+    }),
+    tsconfigPaths(),
+  ],
+});
