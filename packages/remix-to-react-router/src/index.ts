@@ -20,7 +20,10 @@ export default function transformer(file: FileInfo, api: API) {
   }
 
   // Step X - Update compilerOptions.types in tsconfig.json
-  if (file.path.endsWith('tsconfig.json')) {
+  if (
+    file.path.endsWith('tsconfig.json') ||
+    file.path.endsWith('tsconfig.base.json')
+  ) {
     return transformTsconfig(file);
   }
 
