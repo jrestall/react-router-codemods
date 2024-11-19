@@ -2,7 +2,7 @@
   "$schema": "https://codemod-utils.s3.us-west-1.amazonaws.com/configuration_schema.json",
   "name": "remix/2/react-router/upgrade",
   "description": "Migrates Remix to React Router v7",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "engine": "jscodeshift",
   "private": false,
   "include": [
