@@ -7,7 +7,6 @@ import { transformRemixNames } from './transformers/rename-remix.js';
 import { transformRenameServerBuild } from './transformers/rename-server-build.js';
 import { transformTsconfig } from './transformers/tsconfig.js';
 import { transformFunctionParams } from './transformers/function-params.js';
-import { transformViteConfig } from './transformers/vite-config.js';
 
 export default function transformer(file: FileInfo, api: API) {
   // Automates the manual steps from the Remix to React Router upgrade guide
@@ -44,11 +43,6 @@ export default function transformer(file: FileInfo, api: API) {
 
   // Step X - Rename virtual:remix/server-build in server files
   dirtyFlag = transformRenameServerBuild(j, root) || dirtyFlag;
-
-  // Step X - Remove future config property from reactRouter vite plugin
-  if (file.path.endsWith('vite.config.ts')) {
-    dirtyFlag = transformViteConfig(j, root) || dirtyFlag;
-  }
 
   // Step X - Rename instances of remix to reactRouter in server entry files
   if (file.path.endsWith('entry.server.tsx')) {
