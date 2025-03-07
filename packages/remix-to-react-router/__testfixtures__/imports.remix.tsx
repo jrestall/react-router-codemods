@@ -37,6 +37,8 @@ import { useLocation, useNavigate, Route, Switch } from 'react-router-dom';
 import { flatRoutes } from "@remix-run/fs-routes";
 import type { RouteConfig } from "@remix-run/route-config";
 import { remixRoutesOptionAdapter } from '@remix-run/routes-option-adapter';
+const { createRoutesFromFolders } = require("@remix-run/v1-route-convention");
+import createRoutesFromFolders2 from "@remix-run/v1-route-convention";
 
 export const routes: RouteConfig = flatRoutes();
 
