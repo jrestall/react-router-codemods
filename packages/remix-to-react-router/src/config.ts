@@ -78,7 +78,7 @@ export const PACKAGE_CHANGES: Record<string, PackageChange> = {
     },
     packageSource: '@react-router/architect',
   },
-  '^@remix-run/(?!eslint-config)(.*)$': {
+  '^@remix-run/(?!(eslint-config|v1-route-convention))(.*)$': {
     source: '@react-router/$1',
   },
   '^react-router-dom$': {
